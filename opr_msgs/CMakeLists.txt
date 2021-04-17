@@ -12,6 +12,12 @@ add_message_files(
     BallPos.msg
     HajimeWalk.msg
     HajimeMotion.msg
+    SetColor.msg
+)
+
+add_service_files(
+    FILES
+    Color.srv
 )
 
 generate_messages(

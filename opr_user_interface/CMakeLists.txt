@@ -20,6 +20,7 @@ add_definitions(-DQT_NO_KEYWORDS)
 
 qt5_wrap_cpp(MOC_FILES
     include/husendcom.hpp
+    include/color_calibration.hpp
 )
 
 qt5_wrap_cpp(MOC_FILES_GUI
@@ -32,6 +33,7 @@ qt5_wrap_cpp(MOC_FILES_RVIZ
 
 set(SOURCE_FILES
     src/husendcom.cpp
+    src/color_calibration.cpp
     ${MOC_FILES}
 )
 

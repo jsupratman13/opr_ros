@@ -6,6 +6,7 @@
 #include <QTabWidget>
 
 class HuSendCom;
+class ColorCalibration;
 
 class StatusUI : public QTabWidget
 {
@@ -13,6 +14,7 @@ class StatusUI : public QTabWidget
     public:
         StatusUI(QTabWidget *parent);
         HuSendCom *husendcom_tab;
+        ColorCalibration *color_calibration_tab;
 
     private:
         ros::NodeHandle nh_;
