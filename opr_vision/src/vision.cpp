@@ -15,9 +15,9 @@
 static const std::string NAME = "test_wind";
 static const std::string NAME2 = "test2_win";
 static const std::string NAME3 = "test3_win";
-static std::mutex mutex_lock;
-static std::mutex mutex_objects;
-static std::mutex mutex_whiteline;
+// static std::mutex mutex_lock;
+// static std::mutex mutex_objects;
+// static std::mutex mutex_whiteline;
 
 cv::Mat QImageToMat(QImage image)
 {
@@ -64,8 +64,8 @@ Vision::Vision() : color_table_filename("/home/gisen/ros/src/opr_ros/opr_vision/
     clear_server_ = nh_.advertiseService("/vision/clear_color_table", &Vision::clearColorTable, this);
     set_color_sub_ = nh_.subscribe("/vision/set_color_table", 1, &Vision::setColorTable, this);
     cv::namedWindow(NAME);
-    cv::namedWindow(NAME2);
-    cv::namedWindow(NAME3);
+    // cv::namedWindow(NAME2);
+    // cv::namedWindow(NAME3);
 }
 
 Vision::~Vision()
@@ -74,8 +74,8 @@ Vision::~Vision()
     terminated = true;
     //th.join();
     cv::destroyWindow(NAME);
-    cv::destroyWindow(NAME2);
-    cv::destroyWindow(NAME3);
+    // cv::destroyWindow(NAME2);
+    // cv::destroyWindow(NAME3);
 }
 
 bool Vision::loadColorTable(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
@@ -122,7 +122,7 @@ void Vision::setLensType(const int lens_type)
 
 std::vector<Pos2D> Vision::getDetectedObject(Object_T obj, Object_Ownership_T ownership)
 {
-    std::lock_guard<std::mutex> lock(mutex_objects);
+    // std::lock_guard<std::mutex> lock(mutex_objects);
     std::vector<Pos2D> ret;
     if(ownership == OWNERSHIP_ANY) {
         for(object_pos p : objects) {
@@ -148,7 +148,7 @@ std::vector<Pos2D> Vision::getDetectedObject(Object_T obj, Object_Ownership_T ow
 
 int Vision::getWhiteLinePos(std::vector<NPos2D> &whitelines)
 {
-    std::lock_guard<std::mutex> lock(mutex_whiteline);
+    // std::lock_guard<std::mutex> lock(mutex_whiteline);
     whitelines.clear();
     for(object_pos pos : white_line) {
         NPos2D p(pos.x, pos.y);
@@ -173,7 +173,7 @@ void Vision::getImageInfo(const IplImage *ipl_img, int &width, int &height, int 
 
 void Vision::getImageData(char *data)
 {
-    std::unique_lock<std::mutex> lock(mutex_lock);
+    // std::unique_lock<std::mutex> lock(mutex_lock);
     cv::resize(img, view_img, view_img.size());
     // lock.unlock();
     const std::size_t data_len = view_img.rows * view_img.cols * view_img.channels();
@@ -182,9 +182,9 @@ void Vision::getImageData(char *data)
 
 void Vision::getColorResultData(char *data)
 {
-    std::unique_lock<std::mutex> lock(mutex_lock);
+    // std::unique_lock<std::mutex> lock(mutex_lock);
     cv::Mat result(img.rows, img.cols, CV_16UC1);
-    lock.unlock();
+    // lock.unlock();
     object_detector->getColorResultImageData(result);
     cv::Mat resized_result;
     cv::resize(result, resized_result, cv::Size(view_img.cols, view_img.rows), 0, 0, cv::INTER_NEAREST);
@@ -268,7 +268,7 @@ std::vector<struct BoundingBox> Vision::getEnemyRobotBoundingBox(void)
 
 void Vision::getUpdatedImage(IplImage **ret_img)
 {
-    std::lock_guard<std::mutex> lock(mutex_lock);
+    // std::lock_guard<std::mutex> lock(mutex_lock);
     IplImage i = img;
     ipl = cvCloneImage(&i);
     *ret_img = ipl;
@@ -293,12 +293,12 @@ std::string Vision::detectQRcode(void)
     std::string qr_code("nothing");
     zbar::ImageScanner scanner;
     cv::Mat grey;
-    std::unique_lock<std::mutex> lock(mutex_lock);
+    // std::unique_lock<std::mutex> lock(mutex_lock);
     cv::cvtColor(img, grey, CV_BGR2GRAY);
     unsigned char *raw = grey.data;
     const int width = img.cols;
     const int height = img.rows;
-    lock.unlock();
+    // lock.unlock();
     zbar::Image image(width, height, "Y800", raw, width * height);
     [[maybe_unused]] const int n = scanner.scan(image);
     for(zbar::Image::SymbolIterator symbol = image.symbol_begin(); symbol != image.symbol_end(); ++symbol) {
@@ -399,103 +399,109 @@ void Vision::update(void)
 #endif
 }
 
+#if 0
+## update_hplstatus
+vision.getImageInfo(w, h, bpp)
+vision.getImageData(buf)
+status_mgr.setImage(w, h, bpp, buf)
+vision.getColorResultData(buf)
+status_mgr.setColorResultData(w, h, bpp, buf)
+delete [] buf;
+
+detectedObjs
+if ballpos_local
+    ...
+    detectedObjs.pushback()
+if goal
+    ...
+
+if num_whitelines
+    ...
+status_mgr.setVisibleObjects(detectedObjs)
+status_mgr.setSelfPos(..
+status_mgr.setJointAngles
+pose.getParticle
+status_mgr.setMCL
+###
+
+## showColorResult
+int color = 1 << ui.comboColor->currentIndex()
+int width = status.colresult.width
+int height = status.colresult.height
+QImage img(width, height, QImage::Format_RGB888)
+unsigned short *p = (unsigned short *)&status.colresult.data[0];
+unsigned char *q = img.scanLine(0);
+unsigned char *rgb = currentImage_rgb.scanLine(0);
+int num = width * height;
+float score = 0.0f;
+for(int i = 0; i < num; i ++){
+    unsigned short c = *p++;
+    if (c & color){
+        *q++ = 255; *q++ = 255; *q++ = 255;
+    } else {
+        *q++ =   0; *q++ =   0; *q++ =   0;
+    }
+}
+#endif
+
 void Vision::imageCb(const sensor_msgs::ImageConstPtr &msg){
-    object_detector->setColorTable(145, 54, 34, 5, COLOR_GREEN);
-    object_detector->setColorTable(235, 128, 128, 5, COLOR_WHITE);
     cv_bridge::CvImagePtr cv_ptr;
     try{
-        cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-        // cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::RGB8);
+        // cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+        cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::RGB8);
     }
     catch (cv_bridge::Exception &e){
         ROS_ERROR("cv_bridge exception: %s", e.what());
         return ;
     }
     
-    std::unique_lock<std::mutex> lock_img(mutex_lock);
-    // lock_img.lock();
     img = cv_ptr->image;
     object_detector->setImage(img);
-
-    lock_img.unlock();
-
     object_detector->getObjects(objects, white_line);
 
-    cv::Mat result(img.rows, img.cols, CV_16UC1);
-    // cv::Mat result(img.rows, img.cols, CV_8UC3);
-    // cv::resize(img, img, cv::Size(320, 240));
-    cv::imshow(NAME2, img);
-    object_detector->getColorResultImageData(result);
-    cv::Mat resized_result;
-    cv::resize(result, resized_result, cv::Size(view_img.cols, view_img.rows), 0, 0, cv::INTER_NEAREST);
+    // cv::Mat result(img.rows, img.cols, CV_16UC1);
+    // // cv::Mat result(img.rows, img.cols, CV_8UC3);
+    // // cv::resize(img, img, cv::Size(320, 240));
+    // cv::imshow(NAME2, img);
+    // object_detector->getColorResultImageData(result);
+    // cv::Mat resized_result;
+    // cv::resize(result, resized_result, cv::Size(view_img.cols, view_img.rows), 0, 0, cv::INTER_NEAREST);
     //cv::imwrite("/home/gisen/result.png", result); //img.save("/home/gisen/test.png");
 
-#if 0
-    //visualize whitelines
-    std::vector<NPos2D> whitelines;
-    //int num_whitelines = getWhiteLinePos(whitelines);
-    cv::Mat result(img.rows, img.cols, CV_16UC1);
-    //object_detector->getColorResultImageData(result);
-    object_detector->getLabelingImage(result);
-    std_msgs::Header header;
-    cv_bridge::CvImage img_bridge;
-    img_bridge = cv_bridge::CvImage(header, sensor_msgs::image_encodings::MONO16, result);
-    image_pub_.publish(img_bridge.toImageMsg());
-#endif
 
     // extract image color data (update_hplstatus)
     int width, height, bpp;
     getImageInfo(width, height, bpp);
     char *buf = new char[width * height * bpp];
     getImageData(buf);
+    // getColorResultData(buf); //TODO: something is happenning in this function, without this its weird, with it nothing appears
+    
+    // set color commnad + set object detected command
+    // object_detector->setColorTable(145, 54, 34, 5, COLOR_GREEN);
+    // object_detector->setColorTable(235, 128, 128, 5, COLOR_WHITE);
+   
+    // convert buf in setColorResultImage
+    bpp = sizeof(unsigned short);
+    int imsize = width * height * bpp;
     std::vector<std::byte> data;
-    data.resize(width * height * bpp);
-    memcpy(&data[0], buf, width * height * bpp);
-    // getColorResultData(buf);
-    // bpp = sizeof(unsigned short);
+    data.resize(imsize);
+    memcpy(&data[0], buf, imsize);
 
     // update color (showColorResult)
     int color = 1 << COLOR_WHITE; //TODO determine which color to check
-
-    //TODO
-    //Qimage from status
-    //memcopy to img
-    //convert img  to bgr
-    QImage currentImage_rgb(width, height, QImage::Format_RGB888);
-    memcpy(currentImage_rgb.scanLine(0), &data[0], width * height * bpp);
-    //currentImage_rgb.rgbSwapped();
-
     QImage img(width, height, QImage::Format_RGB888);
     unsigned short *p = (unsigned short *)&data[0];
     unsigned char *q = img.scanLine(0);
-    unsigned char *rgb = currentImage_rgb.scanLine(0);
-    bool show_object_color = false;
-    //img.save("/home/gisen/test.png");
-    for(int i = 0; i < width * height; i++){
+    int num = width * height;
+    for(int i = 0; i < num; i++){
         unsigned short c = *p++;
-        unsigned char  b = *rgb++;
-        unsigned char  g = *rgb++;
-        unsigned char  r = *rgb++;
         if (c & color){
-            if(show_object_color){
-                *q++ = r;
-                *q++ = g;
-                *q++ = b;
-            }
-            else{
-                *q++ = 255;
-                *q++ = 255;
-                *q++ = 255;
-            }
+            *q++ = 255; *q++ = 255; *q++ = 255;
         } else{
-            if(color & 1 << COLOR_BLACK && show_object_color){
-                *q++ = 255; *q++ = 255; *q++ = 255;
-            }
-            else{
-                *q++ = 0; *q++ = 0; *q++ = 0;
-            }
+            *q++ = 0; *q++ = 0; *q++ = 0;
         }
     }
+    // img.save("/home/gisen/test.png");
 
     // convert QImage to OpenCV to sensor_msgs/Image
     cv::Mat result2 = QImageToMat(img);
