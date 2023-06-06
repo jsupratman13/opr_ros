@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- arm joints -->
+  <joint name="right_shoulder_pitch_joint" type="revolute">
+    <parent link="body_link"/>
+    <child link="right_shoulder_link"/>
+    <origin xyz="0 -0.0615 0.056" rpy="0 0 0"/>
+    <limit effort="100" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="right_shoulder_roll_joint" type="revolute">
+    <parent link="right_shoulder_link"/>
+    <child link="right_arm_link"/>
+    <origin xyz="0 -0.03 0" rpy="0 0 0"/>
+    <limit effort="100" lower="${-PI}" upper="0" velocity="4.8"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <joint name="right_elbow_pitch_joint" type="revolute">
+    <parent link="right_arm_link"/>
+    <child link="right_forearm_link"/>
+    <origin xyz="0 0 -0.109" rpy="0 0 0"/>
+    <limit effort="100" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- arm links -->
+  <link name="right_shoulder_link">
+    <inertial>
+      <origin xyz="0 0 -0.007843" rpy="${-PI/2} 0 0"/>
+      <mass value="0.031036"/>
+      <inertia ixx="0.006857020" ixy="0" iyy="0.012483012" ixz="0" iyz="0" izz="0.014531649"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="${-PI/2} 0 0"/>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/version4/Shoulder.stl"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_arm_link">
+    <inertial>
+      <origin xyz="0.00049 -0.00049 -0.0545" rpy="0.000873 -0.000873 -0.785398"/>
+      <mass value="0.198342"/>
+      <inertia ixx="0.00398185104" ixy="0.00000071266" ixz="0.00000295835" iyy="0.00398185104" iyz="0.00000295835" izz="0.00042014091"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/version4/RightUpperArm.stl"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_forearm_link">
+    <inertial>
+      <origin xyz="0 0.009824 -0.126417" rpy="-0.095493 0 ${PI}"/>
+      <mass value="0.06313"/>
+      <inertia ixx="0.000296886941" ixy="0" ixz="0" iyy="0.000284555999" iyz="0" izz="0.000016240155"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 ${PI}"/>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/version4/ForeArm.stl"/>
+      </geometry>
+    </visual>
+  </link>
+</robot>

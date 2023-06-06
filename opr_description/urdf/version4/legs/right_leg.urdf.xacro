@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- leg joints -->
+  <joint name="right_waist_yaw_joint" type="revolute">
+    <parent link="body_link"/>
+    <child link="right_waist_yaw_link"/>
+    <origin xyz="0.004954 -0.044 -0.107" rpy="0 0 0"/>
+    <limit effort="100" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <joint name="right_waist_roll_joint" type="revolute">
+    <parent link="right_waist_yaw_link"/>
+    <child link="right_waist_roll_link"/>
+    <origin xyz="0 0 -0.0425" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/4}" upper="${PI/4}" velocity="4.8"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+  <joint name="right_waist_pitch_joint" type="revolute">
+    <parent link="right_waist_roll_link"/>
+    <child link="right_thigh_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/2}" upper="${PI/6}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="right_knee_pitch_joint" type="revolute">
+    <parent link="right_knee_link"/>
+    <child link="right_shin_link"/>
+    <origin xyz="0 0 -0.057" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="right_ankle_pitch_joint" type="revolute">
+    <parent link="right_ankle_side_link"/>
+    <child link="right_ankle_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <joint name="right_ankle_roll_joint" type="revolute">
+    <parent link="right_ankle_link"/>
+    <child link="right_foot_link"/>
+    <origin xyz="-0.031 0 0" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+
+  <!-- mimic joints -->
+  <joint name="right_slider_crank_mimic_joint" type="revolute">
+    <parent link="right_waist_roll_link"/>
+    <child link="right_slider_crank_link"/>
+    <origin xyz="-0.0335 0 0.018" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8"/>
+    <axis xyz="1 0 0"/>
+    <mimic joint="right_waist_roll_joint" multiplier="-2" offset="0"/>
+  </joint>
+  <joint name="right_hamstring_mimic_joint" type="revolute">
+    <parent link="right_waist_roll_link"/>
+    <child link="right_hamstring_link"/>
+    <origin xyz="-0.032 0 -0.02" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/2}" upper="${PI/6}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+    <mimic joint="right_waist_pitch_joint" multiplier="1" offset="0"/>
+  </joint>
+  <joint name="right_knee_pitch_mimic_joint" type="revolute">
+    <!-- closed loop -->
+    <parent link="right_thigh_link"/>
+    <child link="right_knee_link"/>
+    <origin xyz="0 0 -0.1" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+    <mimic joint="right_waist_pitch_joint" multiplier="-1" offset="0"/>
+  </joint>
+  <joint name="right_calf_mimic_joint" type="revolute">
+    <parent link="right_knee_link"/>
+    <child link="right_calf_link"/>
+    <origin xyz="-0.032 0 -0.037" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+    <mimic joint="right_knee_pitch_joint" multiplier="1" offset="0"/>
+  </joint>
+  <joint name="right_ankle_pitch_mimic_joint" type="revolute">
+    <!-- closed loop -->
+    <parent link="right_shin_link"/>
+    <child link="right_ankle_side_link"/>
+    <origin xyz="0 0 -0.1" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+    <mimic joint="right_knee_pitch_joint" multiplier="-1" offset="0"/>
+  </joint>
+
+  <!-- leg links -->
+  <link name="right_waist_yaw_link">
+    <inertial>
+      <origin xyz="0.008607 -0.000 0.008006" rpy="0 0.00087 0"/>
+      <mass value="0.038113"/>
+      <inertia ixx="0.00012431119" ixy="0" ixz="0.000000009667" iyy="0.00030968751" iyz="0" izz="0.00022812922"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/version4/WaistYaw.stl"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_waist_roll_link">
+    <inertial>
+      <origin xyz="-0.009956 0.000 0.002314" rpy="0 0 0"/>
+      <mass value="0.169734"/>
+      <inertia ixx="0.000063728705" ixy="0.0" ixz="0.0" iyy="0.000073380568" iyz="0.0" izz="0.000071098616"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/version4/WaistRoll.stl"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_thigh_link">
+    <inertial>
+      <origin xyz="0.011263 0.0 -0.054265" rpy="-0.317307 0.016236 -0.005585"/>
+      <mass value="0.042298"/>
+      <inertia ixx="0.000070306" ixy="0" ixz="0" iyy="0.000040631" iyz="0" izz="0.000039265"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/version4/Thigh.stl"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_knee_link">
+    <inertial>
+      <origin xyz="-0.013195 0.000597 -0.028499" rpy="0 0 0"/>
+      <mass value="0.292217"/>
+      <inertia ixx="0.00030935116" ixy="0" ixz="0" iyy="0.000297482099" iyz="0" izz="0.000128014307"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/version4/RightKnee.stl"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_shin_link">
+    <inertial>
+      <origin xyz="0.011263 0.000000 0.045735" rpy="0 0 0"/>
+      <mass value="0.042298"/>
+      <inertia ixx="0.000070306" ixy="0" ixz="0.000000534" iyy="0.000040631" iyz="0.000000507" izz="0.000039265"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/version4/Shin.stl"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_ankle_side_link">
+    <inertial>
+      <origin xyz="-0.013347 0.0 0.008343" rpy="0 0 0"/>
+      <mass value="0.023147"/>
+      <inertia ixx="0.000020167808" ixy="-0.000000045124" ixz="0.000002791677" iyy="0.000007373394" iyz="-0.000000072190" izz="0.000022888907"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/version4/AnkleSide.stl"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_ankle_link">
+    <inertial>
+      <origin xyz="-0.032373 -0.000347 0.005993" rpy="-0.05933 -0.16006 0.01135"/>
+      <mass value="0.251442"/>
+      <inertia ixx="0.00076837" ixy="0.00000308474" ixz="0.00033997201" iyy="0.002787734" iyz="0.000005228" izz="0.00281200733"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/version4/Ankle.stl"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_foot_link">
+    <inertial>
+      <origin xyz="0.020826 -0.016517 -0.039217" rpy="-0.0968139 -0.022869 0.0383972"/>
+      <mass value="0.098589"/>
+      <inertia ixx="0.000107805" ixy="-0.000009011" ixz="-0.000008516" iyy="0.000362838" iyz="0.000007813" izz="0.000440229"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/version4/RightFoot.stl"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_slider_crank_link">
+    <inertial>
+      <origin xyz="-0.002952 0.00009 0.011619" rpy="0.00767944 0.246632 0"/>
+      <mass value="0.008594"/>
+      <inertia ixx="0.000000938108" ixy="0" ixz="0" iyy="0.000000887315" iyz="0" izz="0.000000292514"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/version4/SliderCrank.stl"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_hamstring_link">
+    <inertial>
+      <origin xyz="-0.001824 0.000000 -0.047726" rpy="0 0 0"/>
+      <mass value="0.029252"/>
+      <inertia ixx="0.000049199" ixy="0.000000" ixz="-0.000000651" iyy="0.000026577" iyz="-0.000000219" izz="0.000023937"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/version4/Hamstring.stl"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_calf_link">
+    <inertial>
+      <origin xyz="-0.001824 0.000 -0.052274" rpy="0 0 0"/>
+      <mass value="0.029252"/>
+      <inertia ixx="0.000049199945" ixy="0.000" ixz="0.000000651855" iyy="0.000026577036" iyz="-0.000000219226" izz="0.000023937660"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/version4/Calf.stl"/>
+      </geometry>
+    </visual>
+  </link>
+</robot>
