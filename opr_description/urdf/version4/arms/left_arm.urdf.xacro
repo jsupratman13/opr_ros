@@ -36,6 +36,12 @@
         <mesh filename="package://opr_description/meshes/version4/Shoulder.stl"/>
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="0.0 0.01763494312763214 -1.0798288327200158e-18" rpy="-3.141592653589793 1.5707963267948966 0.0"/>
+      <geometry>
+        <box size="0.03200000151991844 0.04626988619565964 0.0502999983727932"/>
+      </geometry>
+    </collision>
   </link>
   <link name="left_arm_link">
     <inertial>
@@ -44,11 +50,16 @@
       <inertia ixx="0.000398226787" ixy="0.000017648" ixz="-0.0003440285" iyy="0.000398226787" iyz="0.0003440285" izz="0.00042097457"/>
     </inertial>
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <mesh filename="package://opr_description/meshes/version4/LeftUpperArm.stl"/>
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="9.999983012676572e-05 9.999983012676239e-05 -0.05449999962002039" rpy="3.141592653589793 -0.0 1.5707963267948966"/>
+      <geometry>
+        <box size="0.045299999415874474 0.04529999941587448 0.132999999448657"/>
+      </geometry>
+    </collision>
   </link>
   <link name="left_forearm_link">
     <inertial>
@@ -57,10 +68,15 @@
       <inertia ixx="0.000296886941" ixy="0" ixz="0" iyy="0.000284555999" iyz="0" izz="0.000016240155"/>
     </inertial>
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <mesh filename="package://opr_description/meshes/version4/ForeArm.stl"/>
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="1.6544247971531333e-34 2.7018807354169517e-18 -0.10078542958945036" rpy="3.141592653589793 -0.0 3.141592653589793"/>
+      <geometry>
+        <box size="0.02500000037252903 0.05029999837279319 0.2233708593994379"/>
+      </geometry>
+    </collision>
   </link>
 </robot>

@@ -19,5 +19,11 @@
         <mesh filename="package://opr_description/meshes/version4/Trunk.stl"/>
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="-0.03270612440339107 -0.00010220211766156579 -0.007181904014356449" rpy="-2.882630121591322 -0.0013257236025648262 1.5704451281988223"/>
+      <geometry>
+        <box size="0.14548409358720668 0.1783637674020797 0.2041607213195921"/>
+      </geometry>
+    </collision>
   </link>
 </robot>
