@@ -18,7 +18,7 @@
   </joint>
   -->
 
-  <!-- Import robot parts -->
+  <!-- import robot parts -->
   <xacro:include filename="$(find opr_description)/urdf/version4/body/body.urdf.xacro"/>
   <xacro:include filename="$(find opr_description)/urdf/version4/head/head.urdf.xacro"/>
   <xacro:include filename="$(find opr_description)/urdf/version4/arms/left_arm.urdf.xacro"/>
@@ -26,4 +26,14 @@
   <xacro:include filename="$(find opr_description)/urdf/version4/legs/left_leg.urdf.xacro"/>
   <xacro:include filename="$(find opr_description)/urdf/version4/legs/right_leg.urdf.xacro"/>
 
+  <!-- gazebo reference -->
+  <xacro:include filename="$(find opr_description)/urdf/gazebo.xacro"/>
+  <xacro:include filename="$(find opr_description)/urdf/version4/head/head.gazebo.xacro"/>
+  <xacro:include filename="$(find opr_description)/urdf/version4/arms/arms.gazebo.xacro"/>
+  <xacro:include filename="$(find opr_description)/urdf/version4/legs/legs.gazebo.xacro"/>
+
+  <!-- transmission -->
+  <xacro:include filename="$(find opr_description)/urdf/version4/head/head.transmission.xacro"/>
+  <xacro:include filename="$(find opr_description)/urdf/version4/arms/arms.transmission.xacro"/>
+  <xacro:include filename="$(find opr_description)/urdf/version4/legs/legs.transmission.xacro"/>
 </robot>
