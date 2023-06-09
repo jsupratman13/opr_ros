@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="gankenkun">
-  <!--Constants for robot dimensions -->
+  <!--Constants
+  for robot dimensions -->
   <xacro:property name="PI" value="3.1415926535897931"/>
 
   <!-- Import Rviz color -->
@@ -9,14 +10,13 @@
   <!-- import empty link -->
   <link name="base_link"/>
   <!-- uncomment this part to fixed the body in space (ignore gravity) -->
-  <!--
-  <link name="world"/>
+  <!-- <link name="world"/>
   <joint name="world2base" type="fixed">
-    <origin xyz="0 0 0" rpy="0 0 0" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
     <parent link="world"/>
     <child link="base_link"/>
-  </joint>
-  -->
+  </joint> -->
+
 
   <!-- import robot parts -->
   <xacro:include filename="$(find opr_description)/urdf/version4/body/body.urdf.xacro"/>
@@ -28,6 +28,7 @@
 
   <!-- gazebo reference -->
   <xacro:include filename="$(find opr_description)/urdf/gazebo.xacro"/>
+  <xacro:include filename="$(find opr_description)/urdf/version4/body/body.gazebo.xacro"/>
   <xacro:include filename="$(find opr_description)/urdf/version4/head/head.gazebo.xacro"/>
   <xacro:include filename="$(find opr_description)/urdf/version4/arms/arms.gazebo.xacro"/>
   <xacro:include filename="$(find opr_description)/urdf/version4/legs/legs.gazebo.xacro"/>

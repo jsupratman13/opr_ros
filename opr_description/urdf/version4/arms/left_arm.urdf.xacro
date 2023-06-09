@@ -5,7 +5,7 @@
     <parent link="body_link"/>
     <child link="left_shoulder_link"/>
     <origin xyz="0 0.0615 0.056" rpy="0 0 0"/>
-    <limit effort="100" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8"/>
+    <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8"/>
     <axis xyz="0 1 0"/>
   </joint>
   <joint name="left_shoulder_roll_joint" type="revolute">
@@ -26,9 +26,9 @@
   <!-- arm links -->
   <link name="left_shoulder_link">
     <inertial>
-      <origin xyz="0 0 -0.007843" rpy="${PI/2} 0 0"/>
+      <origin xyz="0 0.007843 0" rpy="${PI/2} 0 0"/>
       <mass value="0.031036"/>
-      <inertia ixx="0.006857020" ixy="0" iyy="0.012483012" ixz="0" iyz="0" izz="0.014531649"/>
+      <inertia ixx="0.000006857020" ixy="0.0" ixz="0.0" izz="0.000012483012" iyz="0.0" iyy="0.000014531649"/>
     </inertial>
     <visual>
       <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
@@ -47,7 +47,7 @@
     <inertial>
       <origin xyz="-0.000173 -0.000173 -0.0545" rpy="0 0 0"/>
       <mass value="0.198342"/>
-      <inertia ixx="0.000398226787" ixy="0.000017648" ixz="-0.0003440285" iyy="0.000398226787" iyz="0.0003440285" izz="0.00042097457"/>
+        <inertia ixx="0.000398226787" ixy="0.000000017648" ixz="-0.000003440285" iyy="0.000398226787" iyz="0.000003440285" izz="0.000042097457"/>
     </inertial>
     <visual>
       <geometry>
@@ -63,9 +63,9 @@
   </link>
   <link name="left_forearm_link">
     <inertial>
-      <origin xyz="0 0.009824 -0.126417" rpy="-0.095493 0 0"/>
+      <origin xyz="0 0.009824 -0.126417" rpy="0 0 0"/>
       <mass value="0.06313"/>
-      <inertia ixx="0.000296886941" ixy="0" ixz="0" iyy="0.000284555999" iyz="0" izz="0.000016240155"/>
+      <inertia ixx="0.000296886941" ixy="0.000000000007" ixz="-0.000000000026" iyy="0.000284555999" iyz="-0.000025954170" izz="0.000016240155"/>
     </inertial>
     <visual>
       <geometry>

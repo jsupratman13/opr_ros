@@ -13,10 +13,10 @@
   </xacro:macro>
 
   <xacro:arm_transmission name="left_shoulder_pitch_joint"/>
-  <xacro:arm_transmission name="left_shoulder_roll_joint"/>
+  <!-- <xacro:arm_transmission name="left_shoulder_roll_joint"/> -->
   <xacro:arm_transmission name="left_elbow_pitch_joint"/>
 
   <xacro:arm_transmission name="right_shoulder_pitch_joint"/>
-  <xacro:arm_transmission name="right_shoulder_roll_joint"/>
+  <!-- <xacro:arm_transmission name="right_shoulder_roll_joint"/> -->
   <xacro:arm_transmission name="right_elbow_pitch_joint"/>
 </robot>

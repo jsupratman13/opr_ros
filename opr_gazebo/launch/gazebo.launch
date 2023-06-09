@@ -19,7 +19,7 @@
 	</include>
 
 	<!--load the URDF into ROS parameter server -->
-	<param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
+	<param name="robot_description" command="xacro $(arg model)" />
 
 	<!-- run python script to the send a service call to gazebo_ros to spawn a URDF robot-->
 	<node name="urdf_spwaner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model robot1 -param robot_description -x -0.6 -z 0.1" />
