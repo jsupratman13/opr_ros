@@ -16,7 +16,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/Trunk.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/TrunkLight.stl"/>
       </geometry>
     </visual>
     <collision>

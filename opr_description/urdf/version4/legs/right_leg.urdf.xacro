@@ -97,7 +97,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/WaistYaw.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/WaistYawLight.stl"/>
       </geometry>
     </visual>
     <collision>
@@ -115,7 +115,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/WaistRoll.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/WaistRollLight.stl"/>
       </geometry>
     </visual>
     <collision>
@@ -133,7 +133,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/Thigh.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/ThighLight.stl"/>
       </geometry>
     </visual>
     <collision>
@@ -151,7 +151,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/RightKnee.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/RightKneeLight.stl"/>
       </geometry>
     </visual>
     <collision>
@@ -169,7 +169,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/Shin.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/ShinLight.stl"/>
       </geometry>
     </visual>
     <collision>
@@ -187,7 +187,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/AnkleSide.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/AnkleSideLight.stl"/>
       </geometry>
     </visual>
     <collision>
@@ -205,7 +205,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/Ankle.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/AnkleLight.stl"/>
       </geometry>
     </visual>
     <collision>
@@ -223,7 +223,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/RightFoot.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/RightFootLight.stl"/>
       </geometry>
     </visual>
     <collision>
@@ -237,11 +237,11 @@
     <inertial>
       <origin xyz="-0.002952 0 0.01162" rpy="0 0 0"/>
       <mass value="0.008594"/>
-    <inertia ixx="0.000000938108" ixy="0" ixz="-0.000000173459" iyy="0.000000887351" iyz="-0.000000000002" izz="0.000000292478"/>
+      <inertia ixx="0.000000938108" ixy="0" ixz="-0.000000173459" iyy="0.000000887351" iyz="-0.000000000002" izz="0.000000292478"/>
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/SliderCrank.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/SliderCrankLight.stl"/>
       </geometry>
     </visual>
     <collision>
@@ -259,7 +259,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/Hamstring.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/HamstringLight.stl"/>
       </geometry>
     </visual>
     <collision>
@@ -277,7 +277,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/Calf.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/CalfLight.stl"/>
       </geometry>
     </visual>
     <collision>

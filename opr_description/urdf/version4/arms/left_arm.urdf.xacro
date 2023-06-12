@@ -33,7 +33,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/Shoulder.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/ShoulderLight.stl"/>
       </geometry>
     </visual>
     <collision>
@@ -47,11 +47,11 @@
     <inertial>
       <origin xyz="-0.000173 -0.000173 -0.0545" rpy="0 0 0"/>
       <mass value="0.198342"/>
-        <inertia ixx="0.000398226787" ixy="0.000000017648" ixz="-0.000003440285" iyy="0.000398226787" iyz="0.000003440285" izz="0.000042097457"/>
+      <inertia ixx="0.000398226787" ixy="0.000000017648" ixz="-0.000003440285" iyy="0.000398226787" iyz="0.000003440285" izz="0.000042097457"/>
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/LeftUpperArm.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/LeftUpperArmLight.stl"/>
       </geometry>
     </visual>
     <collision>
@@ -69,7 +69,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/ForeArm.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/ForeArmLight.stl"/>
       </geometry>
     </visual>
     <collision>

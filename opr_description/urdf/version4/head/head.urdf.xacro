@@ -18,7 +18,7 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://opr_description/meshes/version4/Head.stl"/>
+        <mesh filename="package://opr_description/meshes/version4/HeadLight.stl"/>
       </geometry>
     </visual>
     <collision>
