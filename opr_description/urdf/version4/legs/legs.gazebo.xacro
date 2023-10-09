@@ -52,7 +52,8 @@
       <selfCollide>false</selfCollide>
       <dampingFactor>0</dampingFactor>
       <!--<mu1>100000</mu1>-->
-      <mu2>0.0</mu2>
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
       <kp>1000000.0</kp>
       <kd>10000.0</kd>
       <maxVel>0.0</maxVel>
