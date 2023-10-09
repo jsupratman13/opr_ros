@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <gazebo reference="body_link">
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
+    <mu1>0.01</mu1>
+    <mu2>0.0</mu2>
     <kp>1000000.0</kp>
     <kd>100.0</kd>
-    <gravity>false</gravity>
-    <minDepth>0.001</minDepth>
-    <maxVel>1.0</maxVel>
+    <maxVel>10.0</maxVel>
+    <minDepth>0.0001</minDepth>
+    <maxContacts>6</maxContacts>
     <selfCollide>false</selfCollide>
+    <dampingFactor>0</dampingFactor>
   </gazebo>
 </robot>

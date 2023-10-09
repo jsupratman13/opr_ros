@@ -1,9 +1,10 @@
 <?xml version="1.0" ?>
-<sdf version="1.4">
+<sdf version="1.7">
   <model name="RoboCup2019_Field">
     <static>true</static>
-
     <link name="chassis">
+      <kinematic>0</kinematic>
+      <gravity>1</gravity>
       <pose>0 0 0.01 0 0 0</pose>
       <collision name="collision">
         <geometry>
@@ -21,7 +22,6 @@
           </friction>
         </surface>
       </collision>
-
       <visual name="carpet">
         <cast_shadows>false</cast_shadows>
         <geometry>

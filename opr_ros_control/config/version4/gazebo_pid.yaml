@@ -1,0 +1,198 @@
+gazebo_ros_control:
+  pid_gains:
+    head_yaw_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    left_shoulder_pitch_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    left_shoulder_roll_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    left_elbow_pitch_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    left_waist_yaw_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    left_waist_roll_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    left_slider_crank_mimic_joint:
+      p: 0.0
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: false
+    left_waist_pitch_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    left_knee_pitch_mimic_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: false
+    left_hamstring_mimic_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: false
+    left_knee_pitch_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    left_knee_calf_mimic_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: false
+    left_ankle_pitch_mimic_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: false
+    left_ankle_pitch_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    left_ankle_roll_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    right_shoulder_pitch_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    right_shoulder_roll_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    right_elbow_pitch_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    right_waist_yaw_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    right_waist_roll_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    right_waist_pitch_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    right_knee_pitch_mimic_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: false
+    right_hamstring_mimic_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: false
+    right_knee_pitch_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    right_knee_calf_mimic_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: false
+    right_ankle_pitch_mimic_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: false
+    right_ankle_pitch_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true
+    right_ankle_roll_joint:
+      p: 16
+      i: 0.0
+      d: 0.0
+      i_clamp: 0.2
+      antiwindup: true
+      publish_state: true

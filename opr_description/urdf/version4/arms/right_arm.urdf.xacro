@@ -7,20 +7,23 @@
     <origin xyz="0 -0.0615 0.056" rpy="0 0 0"/>
     <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8"/>
     <axis xyz="0 1 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
   <joint name="right_shoulder_roll_joint" type="revolute">
     <parent link="right_shoulder_link"/>
     <child link="right_arm_link"/>
     <origin xyz="0 -0.03 0" rpy="0 0 0"/>
-    <limit effort="100" lower="${-PI}" upper="0" velocity="4.8"/>
+    <limit effort="1000" lower="${-PI}" upper="${PI}" velocity="4.8"/>
     <axis xyz="1 0 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
   <joint name="right_elbow_pitch_joint" type="revolute">
     <parent link="right_arm_link"/>
     <child link="right_forearm_link"/>
     <origin xyz="0 0 -0.109" rpy="0 0 0"/>
-    <limit effort="100" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8"/>
+    <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8"/>
     <axis xyz="0 1 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
 
   <!-- arm links -->
@@ -47,7 +50,8 @@
     <inertial>
       <origin xyz="0.00049 -0.00049 -0.0545" rpy="0 0 0"/>
       <mass value="0.198342"/>
-      <inertia ixx="0.000398185104" ixy="0.000000071266" ixz="0.000000295835" iyy="0.000398185104" iyz="0.000000295835" izz="0.000042014091"/>
+      <!--<inertia ixx="0.000398185104" ixy="0.000000071266" ixz="0.000000295835" iyy="0.000398185104" iyz="0.000000295835" izz="0.000042014091"/>-->
+      <inertia ixx="0.000398185104" ixy="0.0" ixz="0.0" iyy="0.000398185104" iyz="0.0" izz="0.000042014091"/>
     </inertial>
     <visual>
       <geometry>

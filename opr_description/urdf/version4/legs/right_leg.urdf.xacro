@@ -5,8 +5,9 @@
     <parent link="body_link"/>
     <child link="right_waist_yaw_link"/>
     <origin xyz="0.004954 -0.044 -0.107" rpy="0 0 0"/>
-    <limit effort="100" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8"/>
+    <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8"/>
     <axis xyz="0 0 1"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
   <joint name="right_waist_roll_joint" type="revolute">
     <parent link="right_waist_yaw_link"/>
@@ -14,6 +15,7 @@
     <origin xyz="0 0 -0.0425" rpy="0 0 0"/>
     <limit effort="1000" lower="${-PI/4}" upper="${PI/4}" velocity="4.8"/>
     <axis xyz="1 0 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
   <joint name="right_waist_pitch_joint" type="revolute">
     <parent link="right_waist_roll_link"/>
@@ -21,6 +23,7 @@
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <limit effort="1000" lower="${-PI/2}" upper="${PI/6}" velocity="4.8"/>
     <axis xyz="0 1 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
   <joint name="right_knee_pitch_joint" type="revolute">
     <parent link="right_knee_link"/>
@@ -28,6 +31,7 @@
     <origin xyz="0 0 -0.057" rpy="0 0 0"/>
     <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="4.8"/>
     <axis xyz="0 1 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
   <joint name="right_ankle_pitch_joint" type="revolute">
     <parent link="right_ankle_side_link"/>
@@ -35,6 +39,7 @@
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8"/>
     <axis xyz="0 1 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
   <joint name="right_ankle_roll_joint" type="revolute">
     <parent link="right_ankle_link"/>
@@ -42,6 +47,7 @@
     <origin xyz="-0.031 0 0" rpy="0 0 0"/>
     <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8"/>
     <axis xyz="1 0 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
 
   <!-- mimic joints -->
@@ -52,6 +58,7 @@
     <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8"/>
     <axis xyz="1 0 0"/>
     <mimic joint="right_waist_roll_joint" multiplier="-2" offset="0"/>
+    <dynamics damping="0.0" friction="0.0"/>
   </joint>
   <joint name="right_hamstring_mimic_joint" type="revolute">
     <parent link="right_waist_roll_link"/>
@@ -60,15 +67,16 @@
     <limit effort="1000" lower="${-PI/2}" upper="${PI/6}" velocity="4.8"/>
     <axis xyz="0 1 0"/>
     <mimic joint="right_waist_pitch_joint" multiplier="1" offset="0"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
   <joint name="right_knee_pitch_mimic_joint" type="revolute">
-    <!-- closed loop -->
     <parent link="right_thigh_link"/>
     <child link="right_knee_link"/>
     <origin xyz="0 0 -0.1" rpy="0 0 0"/>
     <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="4.8"/>
     <axis xyz="0 1 0"/>
     <mimic joint="right_waist_pitch_joint" multiplier="-1" offset="0"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
   <joint name="right_calf_mimic_joint" type="revolute">
     <parent link="right_knee_link"/>
@@ -77,15 +85,16 @@
     <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="4.8"/>
     <axis xyz="0 1 0"/>
     <mimic joint="right_knee_pitch_joint" multiplier="1" offset="0"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
   <joint name="right_ankle_pitch_mimic_joint" type="revolute">
-    <!-- closed loop -->
     <parent link="right_shin_link"/>
     <child link="right_ankle_side_link"/>
     <origin xyz="0 0 -0.1" rpy="0 0 0"/>
     <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8"/>
     <axis xyz="0 1 0"/>
     <mimic joint="right_knee_pitch_joint" multiplier="-1" offset="0"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
 
   <!-- leg links -->

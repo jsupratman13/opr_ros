@@ -10,13 +10,12 @@
   <!-- import empty link -->
   <link name="base_link"/>
   <!-- uncomment this part to fixed the body in space (ignore gravity) -->
-  <!-- <link name="world"/>
-  <joint name="world2base" type="fixed">
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <parent link="world"/>
-    <child link="base_link"/>
-  </joint> -->
-
+  <!--<link name="world"/>-->
+  <!--<joint name="world2base" type="fixed">-->
+  <!--  <origin xyz="0 0 0" rpy="0 0 0"/>-->
+  <!--  <parent link="world"/>-->
+  <!--  <child link="base_link"/>-->
+  <!--</joint>-->
 
   <!-- import robot parts -->
   <xacro:include filename="$(find opr_description)/urdf/version4/body/body.urdf.xacro"/>
