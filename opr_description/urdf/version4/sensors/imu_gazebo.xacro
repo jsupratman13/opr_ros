@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="n100_gazebo" params="name update_rate">
+  <xacro:macro name="imu_gazebo" params="name update_rate">
     <gazebo reference="${name}_link">
       <material>Gazebo/Gray</material>
     </gazebo>
