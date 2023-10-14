@@ -36,4 +36,10 @@
   <xacro:include filename="$(find opr_description)/urdf/version4/head/head.transmission.xacro"/>
   <xacro:include filename="$(find opr_description)/urdf/version4/arms/arms.transmission.xacro"/>
   <xacro:include filename="$(find opr_description)/urdf/version4/legs/legs.transmission.xacro"/>
+
+  <!-- sensors -->
+  <xacro:include filename="$(find opr_description)/urdf/version4/sensors/imu/n100.xacro"/>
+  <xacro:n100_imu name="imu" parent="body_link" update_rate="100">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:n100_imu>
 </robot>
