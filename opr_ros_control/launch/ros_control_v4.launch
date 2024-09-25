@@ -7,5 +7,5 @@
   <rosparam file="$(find opr_ros_control)/config/version4/gazebo_pid.yaml" command="load"/>
 
   <!-- load controllers -->
-  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller           head_yaw_controller           left_shoulder_pitch_controller           left_shoulder_roll_controller           left_elbow_pitch_controller           left_waist_yaw_controller           left_waist_roll_controller           left_waist_pitch_controller           left_knee_pitch_controller           left_ankle_pitch_controller           left_ankle_roll_controller           right_shoulder_pitch_controller           right_shoulder_roll_controller           right_elbow_pitch_controller           right_waist_yaw_controller           right_waist_roll_controller           right_waist_pitch_controller           right_knee_pitch_controller           right_ankle_pitch_controller           right_ankle_roll_controller           "/>
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller joint_group_position_controller"/>
 </launch>

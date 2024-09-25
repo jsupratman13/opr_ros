@@ -1,0 +1,109 @@
+robot_hardware:
+  - sustaina_hw_interface0
+  - sustaina_hw_interface1
+  - sustaina_hw_interface2
+  - sustaina_hw_interface3
+
+sustaina_hw_interface0:
+  type: b3m_hw_interface/B3MHwInterface
+  port: /dev/ttyUSB0
+  baudrate: 3000000
+  start_at_zero: true
+  joints:
+    right_ankle_roll_joint:
+      servo_id: 1
+      gear_ratio: 1.0
+      reverse: false
+    right_ankle_pitch_joint:
+      servo_id: 2
+      gear_ratio: 1.0
+      reverse: false
+    right_knee_pitch_joint:
+      servo_id: 3
+      gear_ratio: 1.0
+      reverse: false
+    right_waist_pitch_joint:
+      servo_id: 4
+      gear_ratio: 1.0
+      reverse: false
+    right_waist_roll_joint:
+      servo_id: 5
+      gear_ratio: 2.0
+      reverse: true
+
+sustaina_hw_interface1:
+  type: b3m_hw_interface/B3MHwInterface
+  port: /dev/ttyUSB1
+  baudrate: 3000000
+  start_at_zero: true
+  joints:
+    right_waist_yaw_joint:
+      servo_id: 6
+      gear_ratio: 1.0
+      reverse: false
+    right_elbow_pitch_joint:
+      servo_id: 9
+      gear_ratio: 1.0
+      reverse: false
+    right_shoulder_roll_joint:
+      servo_id: 8
+      gear_ratio: 1.0
+      reverse: true
+    right_shoulder_pitch_joint:
+      servo_id: 7
+      gear_ratio: 1.0
+      reverse: false
+
+sustaina_hw_interface2:
+  type: b3m_hw_interface/B3MHwInterface
+  port: /dev/ttyUSB2
+  baudrate: 3000000
+  start_at_zero: true
+  joints:
+    left_ankle_roll_joint:
+      servo_id: 10
+      gear_ratio: 1.0
+      reverse: false
+    left_ankle_pitch_joint:
+      servo_id: 11
+      gear_ratio: 1.0
+      reverse: true
+    left_knee_pitch_joint:
+      servo_id: 12
+      gear_ratio: 1.0
+      reverse: true
+    left_waist_pitch_joint:
+      servo_id: 13
+      gear_ratio: 1.0
+      reverse: true
+    left_waist_roll_joint:
+      servo_id: 14
+      gear_ratio: 2.0
+      reverse: true
+
+sustaina_hw_interface3:
+  type: b3m_hw_interface/B3MHwInterface
+  port: /dev/ttyUSB3
+  baudrate: 3000000
+  start_at_zero: true
+  joints:
+    head_yaw_joint:
+      servo_id: 19
+      gear_ratio: 1.0
+      reverse: true
+    left_waist_yaw_joint:
+      servo_id: 15
+      gear_ratio: 1.0
+      reverse: false
+    left_elbow_pitch_joint:
+      servo_id: 18
+      gear_ratio: 1.0
+      reverse: true
+    left_shoulder_roll_joint:
+      servo_id: 17
+      gear_ratio: 1.0
+      reverse: true
+    left_shoulder_pitch_joint:
+      servo_id: 16
+      gear_ratio: 1.0
+      reverse: true
