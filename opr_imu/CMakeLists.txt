@@ -7,18 +7,15 @@ find_package(
   catkin REQUIRED
   COMPONENTS roscpp
              sensor_msgs
-             std_msgs
-             tf
+             imu_complementary_filter
              serial
 )
 
 catkin_package(
-  INCLUDE_DIRS include
   CATKIN_DEPENDS
     roscpp
     sensor_msgs
-    std_msgs
-    tf
+    imu_complementary_filter
     serial
 )
 
