@@ -76,7 +76,7 @@ void ICM42688ROS::run()
     std::vector<uint8_t> recv_data;
     recv_data.insert(recv_data.end(), buffer, buffer + 4);
     recv_data.insert(recv_data.end(), data.begin(), data.end());
-    if (!getCRC16(recv_data))
+    if (!checkCRC16(recv_data))
       continue;
 
     // parse data
@@ -92,9 +92,9 @@ void ICM42688ROS::run()
     imu_msg.linear_acceleration.x = accel_gyro_temp[0];
     imu_msg.linear_acceleration.y = accel_gyro_temp[1];
     imu_msg.linear_acceleration.z = accel_gyro_temp[2];
-    imu_msg.angular_velocity.x = accel_gyro_temp[3];
-    imu_msg.angular_velocity.y = accel_gyro_temp[4];
-    imu_msg.angular_velocity.z = accel_gyro_temp[5];
+    imu_msg.angular_velocity.x = accel_gyro_temp[3] * M_PI / 180.0;
+    imu_msg.angular_velocity.y = accel_gyro_temp[4] * M_PI / 180.0;
+    imu_msg.angular_velocity.z = accel_gyro_temp[5] * M_PI / 180.0;
     imu_pub_.publish(imu_msg);
 
     ros::spinOnce();
