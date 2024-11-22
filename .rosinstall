@@ -1,0 +1,4 @@
+- git:
+    local-name: b3m_ros
+    uri: https://github.com/jsupratman13/b3m_ros.git
+    version: noetic-devel

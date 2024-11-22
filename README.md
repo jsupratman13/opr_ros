@@ -1,73 +1,59 @@
 # opr_ros
-ROS package for CIT Open Platform Robot GankenKun. Tested on ROS Melodic.
+ROS package for CIT's Open Platform Robot. Tested on ROS Noetic.
 
 ## Installation
-1. Install ros
+1. install ros
 2. create ROS workspace
-```
-$ sudo apt install python-catkin-tools
-$ mkdir -p ~/catkin_ws/src
-$ cd ~/catkin_ws
-$ catkin init
-$ echo 'source ~/catkin_ws/devel/setup.bash' >> ~/.bashrc
-$ echo 'source `catkin locate --shell-verbs`' >> ~/.bashrc
+```bash
+sudo apt install python3-catkin-tools
+mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws
+catkin init
+echo 'source ~/catkin_ws/devel/setup.bash' >> ~/.bashrc
+echo 'source `catkin locate --shell-verbs`' >> ~/.bashrc
 ```
 3. clone repository
+```bash
+cd ~/catkin_ws/src
+git clone https://github.com/jsupratman13/opr_ros.git
 ```
-$ cd ~/catkin_ws/src
-$ git clone https://github.com/citbrains/opr_ros.git
-$ wstool init .
-$ wstool merge opr_ros/opr_ros.rosinstall
-$ wstool update
-$ rosdep install --from-paths . --ignore-src --rosdistro melodic -r -y
+4. install dependencies
+```bash
+wstool init .
+wstool merge opr_ros/.rosinstall
+wstool update
+rosdep install --from-paths . -iry
 ```
-4. build and source
-```
-$ cd ~/catkin_ws
-$ catkin build 
-$ catkin source
+5. build and source
+```bash
+cd ~/catkin_ws
+catkin build
+catkin source
 ```
 
 ## Usage
 * View URDF model on RViz
 ```
-$ roslaunch opr_bringup display_xacro.launch model:='$(find opr_description)/robots/gankenkun_v3.xacro' gui:=true
+roslaunch opr_bringup display_xacro.launch
 ```
 * Gazebo Simulation
 ```
-$ roslaunch opr_bringup simulation.launch
+roslaunch opr_bringup gazebo.launch
 ```
 * Real Robot
 ```
-$ roslaunch opr_bringup gankenkun_v3.launch
-```
-* Hajime Walk Control
-
-First launch either the **Gazebo Simulation** or **Real Robot** then launch the following:
-```
-$ roslaunch hajime_walk_ros hajime_walk.launch
-```
-Example: stepping on the spot
-```
-$ rostopic pub /hajime_walk/walk opr_msgs/HajimeWalk -- '0' '0' '0' '0' '0'
+roslaunch opr_bringup sustaina.launch
 ```
 
 ## Package Description
-* hajime_walk_ros
-  * collection of files related hajime walk/motion control 
 * opr_bringup
-  * collection of launch files to bring up actual robot and robot simulation
+  * collection of launch files to bring up robot or gazebo
 * opr_description
-  * collection of robot model's urdf, CAD data (stl), collada data (dae)
+  * collection of robot model's URDF
 * opr_gazebo
-  * collection of gazebo related files
-* opr_kondo_driver
-  * collection of B3M servo motor related files
-* opr_msgs
-  * collection of custom ROS messages
+  * collection of gazebo worlds/models
+* opr_imu
+  * collection of robot's imu node
+    * ICM42688_node's firmware can be found [here](https://github.com/SUSTAINA-OP/IMU-Measurement-and-Transmission-Module)
 * opr_ros
-  * package to build other package
-* opr_ros_control
-  * collection of ros controllers
-* opr_user_interface
-  * collection of user interface files
+  * metapackage
