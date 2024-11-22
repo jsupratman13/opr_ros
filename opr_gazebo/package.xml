@@ -1,25 +1,14 @@
 <?xml version="1.0"?>
-<package format="2">
+<package format="3">
   <name>opr_gazebo</name>
   <version>0.0.0</version>
-  <description>The opr_gazebo package</description>
+  <description>Gazebo related worlds/models for Open Platform Robot</description>
   <maintainer email="supratmanjoshua@gmail.com">Joshua Supratman</maintainer>
   <license>Apache License, Version 2.0</license>
-
   <buildtool_depend>catkin</buildtool_depend>
-
-  <depend>roscpp</depend>
-  <depend>geometry_msgs</depend>
-  <depend>opr_msgs</depend>
-  <depend>gazebo_ros</depend>
-  <depend>gazebo_ros_control</depend>
-  <depend>gazebo_msgs</depend>
-
   <export>
-    <gazebo_ros gazebo_media_path="${prefix}/worlds" />
-    <gazebo_ros gazebo_media_path="${prefix}" />
-    <gazebo_ros gazebo_media_path="${prefix}" />
-    <gazebo_ros gazebo_model_path="${prefix}/models" />
+    <gazebo_ros gazebo_media_path="${prefix}/worlds"/>
+    <gazebo_ros gazebo_media_path="${prefix}/materials"/>
+    <gazebo_ros gazebo_model_path="${prefix}/models"/>
   </export>
-
 </package>
