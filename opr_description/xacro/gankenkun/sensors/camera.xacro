@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="camera_gazebo.xacro"/>
+  <xacro:macro name="camera" params="parent *origin name:='camera'">
+    <xacro:property name="lense_depth" value="0.007"/>
+    <xacro:property name="lense_radius" value="0.01"/>
+    <xacro:property name="lense_offset" value="0.003"/>
+    <xacro:property name="body_height" value="0.0605"/>
+    <xacro:property name="body_width" value="0.050"/>
+    <xacro:property name="body_depth" value="0.0921"/>
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin"/>
+      <parent link="${parent}"/>
+      <child link="${name}_rgb_frame"/>
+    </joint>
+    <link name="${name}_rgb_frame">
+      <visual>
+        <origin xyz="0. 0. ${lense_depth / 2 - lense_offset}" rpy="0 ${pi/2} 0"/>
+        <geometry>
+          <cylinder radius="${lense_radius}" length="${lense_depth}"/>
+        </geometry>
+        <material name="black">
+          <color rgba="0. 0. 0. 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0. 0. ${lense_depth / 2 - lense_offset}" rpy="0 ${pi/2} 0"/>
+        <geometry>
+          <cylinder radius="${lense_radius}" length="${lense_depth}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${name}_rgb_optical_joint" type="fixed">
+      <origin xyz="0. 0. 0." rpy="${-pi/2} 0 ${-pi/2}"/>
+      <parent link="${name}_rgb_frame"/>
+      <child link="${name}_rgb_optical_frame"/>
+    </joint>
+    <link name="${name}_rgb_optical_frame"/>
+
+    <!-- gazebo extensions -->
+    <xacro:camera_gazebo name="${name}"/>
+  </xacro:macro>
+</robot>

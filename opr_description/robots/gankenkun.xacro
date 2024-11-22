@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="gankenkun">
+  <!--Constants
+  for robot dimensions -->
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
+  <!-- Import Rviz color -->
+  <xacro:include filename="$(find opr_description)/xacro/materials.xacro"/>
+
+  <!-- import empty link -->
+  <link name="base_link"/>
+  <!-- uncomment this part to fixed the body in space (ignore gravity) -->
+  <!--<link name="world"/>-->
+  <!--<joint name="world2base" type="fixed">-->
+  <!--  <origin xyz="0 0 0" rpy="0 0 0"/>-->
+  <!--  <parent link="world"/>-->
+  <!--  <child link="base_link"/>-->
+  <!--</joint>-->
+
+  <!-- import robot parts -->
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/body/body.urdf.xacro"/>
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/head/head.urdf.xacro"/>
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/arms/left_arm.urdf.xacro"/>
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/arms/right_arm.urdf.xacro"/>
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/legs/left_leg.urdf.xacro"/>
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/legs/right_leg.urdf.xacro"/>
+
+  <!-- gazebo reference -->
+  <xacro:include filename="$(find opr_description)/xacro/gazebo.xacro"/>
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/body/body.gazebo.xacro"/>
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/head/head.gazebo.xacro"/>
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/arms/arms.gazebo.xacro"/>
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/legs/legs.gazebo.xacro"/>
+
+  <!-- transmission -->
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/head/head.transmission.xacro"/>
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/arms/arms.transmission.xacro"/>
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/legs/legs.transmission.xacro"/>
+
+  <!-- sensors -->
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/sensors/imu.xacro"/>
+  <xacro:imu name="imu" parent="body_link" update_rate="10">
+    <origin xyz="0 0 0.12" rpy="0 0 0"/>
+  </xacro:imu>
+  <xacro:include filename="$(find opr_description)/xacro/gankenkun/sensors/camera.xacro"/>
+  <xacro:camera name="camera" parent="head_yaw_link">
+    <origin xyz="0.036496 0 0.055504" rpy="0 ${pi /4} 0"/>
+  </xacro:camera>
+</robot>

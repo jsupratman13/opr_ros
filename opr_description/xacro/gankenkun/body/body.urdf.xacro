@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- body joint-->
+  <joint name="body_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="body_link"/>
+    <origin xyz="0 0 0.4635" rpy="0 0 0"/>
+  </joint>
+
+  <!-- body link -->
+  <link name="body_link">
+    <inertial>
+      <origin xyz="-0.022825 0.000073 -0.015720" rpy="0 0 0"/>
+      <mass value="2.645331"/>
+      <inertia ixx="0.007742297482" ixy="0.000005961013" ixz="0.000422502364" iyy="0.008034384246" iyz="-0.000003797186" izz="0.003984603997"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/gankenkun/TrunkLight.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.03270612440339107 -0.00010220211766156579 -0.007181904014356449" rpy="-2.882630121591322 -0.0013257236025648262 1.5704451281988223"/>
+      <geometry>
+        <box size="0.14548409358720668 0.1783637674020797 0.2041607213195921"/>
+      </geometry>
+    </collision>
+  </link>
+</robot>
