@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- set robot description -->
+  <arg name="robot" default="gankenkun"/>
+  <arg name="model" default="$(find opr_description)/robots/$(arg robot).xacro"/>
+  <param name="robot_description" command="xacro $(arg model)"/>
+
+  <!-- load ros controllers -->
+  <rosparam command="load" file="$(find opr_bringup)/config/controller.yaml"/>
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller joint_group_position_controller"/>
+</launch>
