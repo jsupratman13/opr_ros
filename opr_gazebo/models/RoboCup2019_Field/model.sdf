@@ -2,7 +2,7 @@
 <sdf version="1.7">
   <model name="RoboCup2019_Field">
     <static>true</static>
-    <link name="chassis">
+    <link name="field">
       <kinematic>0</kinematic>
       <gravity>1</gravity>
       <pose>0 0 0.01 0 0 0</pose>
@@ -10,7 +10,7 @@
         <geometry>
           <plane>
             <normal>0 0 1</normal>
-            <size>10.4 7.4</size>
+            <size>100 100</size>
           </plane>
         </geometry>
         <surface>
@@ -32,8 +32,8 @@
         </geometry>
         <material>
           <script>
-            <uri>file://materials/scripts/</uri>
-            <uri>file://materials/textures/</uri>
+            <uri>file://scripts/robocup2019_field.material</uri>
+            <uri>file://textures/fieldtexture.png</uri>
             <name>RoboCup/Field</name>
           </script>
         </material>

@@ -1,12 +1,10 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(opr_gazebo)
 
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS gazebo_ros)
 catkin_package()
 
 install(
-  DIRECTORY materials
-            models
-            worlds
+  DIRECTORY models worlds
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )

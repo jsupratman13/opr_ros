@@ -141,8 +141,8 @@
         </geometry>
         <material>
           <script>
-            <uri>file://materials/scripts/</uri>
-            <uri>file://materials/textures/</uri>
+            <uri>file://scripts/robocup2019_field.material</uri>
+            <uri>file://textures/net.png</uri>
             <name>RoboCup/Net</name>
           </script>
         </material>

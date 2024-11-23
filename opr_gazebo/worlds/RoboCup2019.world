@@ -54,7 +54,7 @@
 
   <include>
     <pose>0 0 0 0 0 0</pose>
-    <uri>model://ball</uri>
+    <uri>model://SoccerBall</uri>
     <name>ball</name>
     <static>false</static>
   </include>
