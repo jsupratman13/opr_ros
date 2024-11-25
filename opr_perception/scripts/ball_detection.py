@@ -1,0 +1,99 @@
+#!/usr/bin/env pipenv-shebang
+# -*- coding:utf-8 -*-
+
+# Copyright (c) 2024 Joshua Supratman
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+import rospy
+from cv_bridge import CvBridge
+from sensor_msgs.msg import Image
+from ultralytics import YOLO
+from vision_msgs.msg import Detection2D
+from vision_msgs.msg import Detection2DArray
+from vision_msgs.msg import ObjectHypothesisWithPose
+
+
+class BallDetection(object):
+    def __init__(self) -> None:
+        self.__model_name = rospy.get_param('~model_name', 'yolov8m.pt')
+        self.__score_threshold = rospy.get_param('~score_thresh', 0.3)
+        self.__iou_threshold = rospy.get_param('~iou_thresh', 0.7)
+        self.__max_detection = rospy.get_param('~max_detection', 2)
+        self.__classes = rospy.get_param('~classes', None)
+
+        self.__model = YOLO(self.__model_name)
+        self.__model.fuse()
+
+        self.__cv_bridge = CvBridge()
+        self.__result_pub = rospy.Publisher('detections', Detection2DArray, queue_size=1)
+        self.__image_sub = rospy.Subscriber('image_rect', Image, self.__image_cb)
+        self.__debug_pub = rospy.Publisher('debug', Image, queue_size=1)
+
+        rospy.loginfo('BallDetection')
+
+    def __image_cb(self, img_msg: Image) -> None:
+        try:
+            cv_image = self.__cv_bridge.imgmsg_to_cv2(img_msg, desired_encoding="bgr8")
+        except Exception as e:
+            rospy.logerr(f'Error converting ROS image to openCV: {e}')
+            return
+
+        results = self.__model.predict(
+            source=cv_image,
+            conf=self.__score_threshold,
+            iou=self.__iou_threshold,
+            verbose=False,
+            max_det=self.__max_detection,
+            classes=self.__classes)
+
+        detection_msg = Detection2DArray()
+        detection_msg.header = img_msg.header
+        for result in results[0].boxes:
+            x_min, y_min, x_max, y_max = map(int, result.xyxy[0].tolist())
+            cls = result.cls[0].item()
+            confidence = result.conf[0].item()
+            # label = self.__model.names[int(cls)]
+
+            detection = Detection2D()
+            detection.bbox.center.x = (x_min + x_max) / 2.0
+            detection.bbox.center.y = (y_min + y_max) / 2.0
+            detection.bbox.size_x = x_max - x_min
+            detection.bbox.size_y = y_max - y_min
+
+            hypothesis = ObjectHypothesisWithPose()
+            hypothesis.id = int(cls)
+            hypothesis.score = confidence
+            detection.results.append(hypothesis)
+
+            detection_msg.detections.append(detection)
+
+        self.__result_pub.publish(detection_msg)
+
+        debug_img = cv_image.copy()
+        for result in results:
+            debug_img = result.plot(img=debug_img)
+        try:
+            debug_msg = self.__cv_bridge.cv2_to_imgmsg(debug_img, encoding='bgr8')
+        except Exception as e:
+            rospy.logerr(f'Error converting openCV to ROS image: {e}')
+            return
+        debug_msg.header = img_msg.header
+        self.__debug_pub.publish(debug_msg)
+
+
+if __name__ == '__main__':
+    rospy.init_node('ball_detection')
+    node = BallDetection()
+    rospy.spin()

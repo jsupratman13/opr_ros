@@ -50,5 +50,11 @@ qtcreator-*
 # vim
 *.swp
 
+# pip lock file
+Pipfile.lock
+
+# yolo weight
+*.pt
+
 # Catkin custom files
 CATKIN_IGNORE
