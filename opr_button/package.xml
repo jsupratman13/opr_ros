@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>opr_button</name>
+  <version>0.0.0</version>
+  <description>Start/Stop button for Open Platform Robot</description>
+  <maintainer email="supratmanjoshua@gmail.com">jsupratman13</maintainer>
+  <license>Apache License, Version 2.0</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>python3-pip</build_depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>serial</depend>
+</package>

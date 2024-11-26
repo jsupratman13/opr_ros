@@ -48,6 +48,9 @@ roslaunch opr_bringup sustaina.launch
 ## Package Description
 * opr_bringup
   * collection of launch files to bring up robot or gazebo
+* opr_button
+  * external start stop button node
+  * upload firmware with `pio run -t upload`
 * opr_description
   * collection of robot model's URDF
 * opr_gazebo
