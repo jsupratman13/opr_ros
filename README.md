@@ -1,5 +1,5 @@
 # opr_ros
-ROS package for CIT's Open Platform Robot. Tested on ROS Noetic.
+ROS package for CITBrain's Open Platform Robot. Tested on ROS Noetic.
 
 ## Installation
 1. install ros
@@ -17,14 +17,22 @@ echo 'source `catkin locate --shell-verbs`' >> ~/.bashrc
 cd ~/catkin_ws/src
 git clone https://github.com/jsupratman13/opr_ros.git
 ```
-4. install dependencies
+4. clone dependencies
 ```bash
 wstool init .
 wstool merge opr_ros/.rosinstall
 wstool update
-rosdep install --from-paths . -iry
 ```
-5. build and source
+5. install dependencies
+  * real robot (avoid installing gazebo related packages)
+    ```bash
+    rosdep install --from-paths . -iry --skip-keys "opr_gazebo"
+     ```
+  * simulation
+    ```bash
+    rosdep install --from-paths . -iry
+    ```
+6. build and source
 ```bash
 cd ~/catkin_ws
 catkin build
