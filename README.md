@@ -38,6 +38,11 @@ cd ~/catkin_ws
 catkin build
 catkin source
 ```
+7. Real robot only
+```bash
+echo "export LD_PRELOAD=/usr/lib/aarch64-linux/gnu/libgomp.so.1.0.0"
+sudo cp -a src/opr_ros/etc/udev/rules.d/* /etc/udev/rules.d/.
+```
 
 ## Usage
 * View URDF model on RViz
