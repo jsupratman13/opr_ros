@@ -6,7 +6,7 @@ robot_hardware:
 
 sustaina_hw_interface0:
   type: b3m_hw_interface/B3MHwInterface
-  port: /dev/ttyUSB0
+  port: /dev/ttyB3M_Port_1_to_5
   baudrate: 3000000
   start_at_zero: true
   joints:
@@ -33,7 +33,7 @@ sustaina_hw_interface0:
 
 sustaina_hw_interface1:
   type: b3m_hw_interface/B3MHwInterface
-  port: /dev/ttyUSB1
+  port: /dev/ttyB3M_Port_6_to_9
   baudrate: 3000000
   start_at_zero: true
   joints:
@@ -56,7 +56,7 @@ sustaina_hw_interface1:
 
 sustaina_hw_interface2:
   type: b3m_hw_interface/B3MHwInterface
-  port: /dev/ttyUSB2
+  port: /dev/ttyB3M_Port_10_to_14
   baudrate: 3000000
   start_at_zero: true
   joints:
@@ -83,7 +83,7 @@ sustaina_hw_interface2:
 
 sustaina_hw_interface3:
   type: b3m_hw_interface/B3MHwInterface
-  port: /dev/ttyUSB3
+  port: /dev/ttyB3M_Port_15_to_19
   baudrate: 3000000
   start_at_zero: true
   joints:

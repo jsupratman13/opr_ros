@@ -15,7 +15,7 @@
 
   <!-- imu -->
   <include file="$(find opr_imu)/launch/opr_imu.launch">
-    <arg name="port" value="/dev/ttyACM0"/>
+    <arg name="port" value="/dev/ttyIMU"/>
     <arg name="baudrate" value="115200"/>
     <arg name="device_topic" value="imu/data_raw"/>
     <arg name="imu_topic" value="imu/data"/>
@@ -23,7 +23,7 @@
 
   <!-- start/stop button -->
   <node name="opr_button" pkg="opr_button" type="button_state_node" output="screen">
-    <param name="~port" value="/dev/ttyACM1"/>
+    <param name="~port" value="/dev/ttyButton"/>
     <param name="~baudrate" value="9600"/>
   </node>
 </launch>
