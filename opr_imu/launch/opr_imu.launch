@@ -1,9 +1,17 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="port" default="/dev/ttyACM0"/>
+  <arg name="baudrate" default="115200"/>
+  <arg name="device_topic" default="imu/data_raw"/>
+  <arg name="imu_topic" default="imu/data"/>
+
   <node name="opr_imu" pkg="opr_imu" type="opr_imu" output="screen">
-    <param name="port" value="/dev/ttyACM0"/>
-    <param name="baudrate" value="115200"/>
-    <remap from="imu/data" to="imu/data_raw"/>
+    <param name="port" value="$(arg port)"/>
+    <param name="baudrate" value="$(arg baudrate)"/>
+    <remap from="imu/data" to="$(arg device_topic)"/>
   </node>
-  <node name="imu_filter" pkg="imu_complementary_filter" type="complementary_filter_node" output="screen"/>
+  <node name="imu_filter" pkg="imu_complementary_filter" type="complementary_filter_node" output="screen">
+    <remap from="imu/data_raw" to="$(arg device_topic)"/>
+    <remap from="imu/data" to="$(arg imu_topic)"/>
+  </node>
 </launch>
