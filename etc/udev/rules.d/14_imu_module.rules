@@ -1,0 +1,1 @@
+SUBSYSTEM=="tty", SUBSYSTEMS=="usb", ATTRS{idVendor}=="2886", ATTRS{idProduct}=="802f", SYMLINK+="ttyIMU", MODE="0777", RUN+="/bin/setserial /dev/ttyIMU low_latency"

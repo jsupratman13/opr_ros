@@ -1,0 +1,4 @@
+SUBSYSTEM=="tty", SUBSYSTEMS=="usb",  ATTRS{idVendor}=="0403", ENV{ID_USB_INTERFACE_NUM}=="00", SYMLINK+="ttyB3M_Port_1_to_5", MODE="0777", RUN+="/bin/setserial /dev/ttyB3M_Port_1_to_5 low_latency"
+SUBSYSTEM=="tty", SUBSYSTEMS=="usb",  ATTRS{idVendor}=="0403", ENV{ID_USB_INTERFACE_NUM}=="01", SYMLINK+="ttyB3M_Port_6_to_9", MODE="0777", RUN+="/bin/setserial /dev/ttyB3M_Port_6_to_9 low_latency"
+SUBSYSTEM=="tty", SUBSYSTEMS=="usb",  ATTRS{idVendor}=="0403", ENV{ID_USB_INTERFACE_NUM}=="02", SYMLINK+="ttyB3M_Port_10_to_14", MODE="0777", RUN+="/bin/setserial /dev/ttyB3M_Port_10_to_14 low_latency"
+SUBSYSTEM=="tty", SUBSYSTEMS=="usb",  ATTRS{idVendor}=="0403", ENV{ID_USB_INTERFACE_NUM}=="03", SYMLINK+="ttyB3M_Port_15_to_19", MODE="0777", RUN+="/bin/setserial /dev/ttyB3M_Port_15_to_19 low_latency"

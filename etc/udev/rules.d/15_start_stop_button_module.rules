@@ -1,0 +1,1 @@
+SUBSYSTEM=="tty", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1b4f", ATTRS{idProduct}=="9206", SYMLINK+="ttyButton", MODE="0777", RUN+="/bin/setserial /dev/ttyButton low_latency"
