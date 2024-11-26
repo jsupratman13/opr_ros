@@ -26,4 +26,17 @@
     <param name="~port" value="/dev/ttyButton"/>
     <param name="~baudrate" value="9600"/>
   </node>
+
+  <!-- camera -->
+  <remap from="/camera/image_raw" to="/camera/rgb/image_raw"/>
+  <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen">
+    <param name="video_device" value="/dev/video0"/>
+    <param name="image_width" value="640"/>
+    <param name="image_height" value="480"/>
+    <param name="pixel_format" value="uyvy"/>
+    <param name="color_format" value="yuv422p"/>
+    <param name="camera_frame_id" value="camera_rgb_optical_frame"/>
+    <param name="io_method" value="mmap"/>
+    <param name="framerate" value="5"/>
+  </node>
 </launch>
