@@ -8,6 +8,7 @@
 
   <buildtool_depend>catkin</buildtool_depend>
   <exec_depend>opr_bringup</exec_depend>
+  <exec_depend>opr_button</exec_depend>
   <exec_depend>opr_description</exec_depend>
   <exec_depend>opr_gazebo</exec_depend>
   <exec_depend>opr_imu</exec_depend>
