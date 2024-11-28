@@ -6,7 +6,7 @@
   <node name="ball_detection" pkg="opr_perception" type="ball_detection.py" output="screen">
     <param name="~model_name" value="$(arg model_name)"/>
     <remap from="position_controller/command" to="head_yaw_controller/command"/>
-    <remap from="image_rect" to="camera/rgb/image_raw"/>
-    <remap from="camera_info" to="camera/rgb/camera_info"/>
+    <remap from="image_rect" to="camera/image_raw"/>
+    <remap from="camera_info" to="camera/camera_info"/>
   </node>
 </launch>
