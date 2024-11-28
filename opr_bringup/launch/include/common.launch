@@ -7,5 +7,5 @@
 
   <!-- load ros controllers -->
   <rosparam command="load" file="$(find opr_bringup)/config/controller.yaml"/>
-  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller joint_group_position_controller"/>
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller joint_group_position_controller head_yaw_controller"/>
 </launch>
