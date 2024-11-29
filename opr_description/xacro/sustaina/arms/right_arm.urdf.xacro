@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- arm joints -->
+  <joint name="right_shoulder_pitch_joint" type="revolute">
+    <parent link="body_link"/>
+    <child link="right_shoulder_link"/>
+    <origin xyz="-0.005 -0.0785 0.148" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <joint name="right_shoulder_roll_joint" type="revolute">
+    <parent link="right_shoulder_link"/>
+    <child link="right_arm_link"/>
+    <origin xyz="0 -0.0308 -0.025" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI}" upper="${PI}" velocity="4.8"/>
+    <axis xyz="1 0 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <joint name="right_elbow_pitch_joint" type="revolute">
+    <parent link="right_arm_link"/>
+    <child link="right_forearm_link"/>
+    <origin xyz="0 0 -0.145" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+
+  <!-- arm links -->
+  <link name="right_shoulder_link">
+    <inertial>
+      <origin xyz="0 -0.01004 -0.0052350" rpy="0 0 0"/>
+      <mass value="0.029974"/>
+      <inertia ixx="0.000009025" ixy="0.0" ixz="0.0" iyy="0.000016881" iyz="0.0" izz="0.000011316"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 ${PI}"/>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/Shoulder.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 ${PI}"/>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/Shoulder.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="right_arm_link">
+    <inertial>
+      <origin xyz="0.000415 -0.005221 -0.047591" rpy="0 0 0"/>
+      <mass value="0.433169"/>
+      <inertia ixx="0.001462386" ixy="0.0" ixz="0.0" iyy="0.001573653" iyz="0.0" izz="0.000250070"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/RightUpperArm.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/RightUpperArm.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="right_forearm_link">
+    <inertial>
+      <origin xyz="0 -0.011654 -0.083221" rpy="0 0 ${PI}"/>
+      <mass value="0.137614"/>
+      <inertia ixx="0.000397774" ixy="0.0" ixz="0.0" iyy="0.000391749" iyz="0.0" izz="0.000056957"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 ${PI}"/>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/ForeArm.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 ${PI}"/>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/ForeArm.stl"/>
+      </geometry>
+    </collision>
+  </link>
+</robot>
