@@ -22,7 +22,7 @@
   </include>
 
   <!-- start/stop button -->
-  <node name="opr_button" pkg="opr_button" type="button_state_node" output="screen">
+  <node name="opr_button" pkg="opr_button" type="button_state_node.py" output="screen">
     <param name="~port" value="/dev/ttyButton"/>
     <param name="~baudrate" value="9600"/>
   </node>
