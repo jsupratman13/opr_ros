@@ -16,7 +16,6 @@
 # limitations under the License.
 #
 
-import cv2
 import numpy as np
 import rospy
 from cv_bridge import CvBridge
@@ -32,15 +31,22 @@ from vision_msgs.msg import ObjectHypothesisWithPose
 
 class BallDetection(object):
     def __init__(self) -> None:
+        # yolo related parameter
         self.__model_name = rospy.get_param('~model_name', 'yolov8m.pt')
         self.__score_threshold = rospy.get_param('~score_thresh', 0.3)
         self.__iou_threshold = rospy.get_param('~iou_thresh', 0.7)
         self.__max_detection = rospy.get_param('~max_detection', 2)
         self.__classes = rospy.get_param('~classes', None)
+
+        # ball detection parameter
         self.__ball_label = rospy.get_param('~ball_label', 'sports ball')
         self.__ball_diameter = rospy.get_param('~ball_diameter', 0.13)
         self.__pan_joint = rospy.get_param('~pan_joint', 'head_yaw_joint')
         self.__rate = rospy.Rate(rospy.get_param('~rate', 10))
+
+        # simulation
+        self.__use_sim_time = rospy.get_param('use_sim_time', False)
+        self.__delay_time = rospy.Time.now()
 
         self.__model = YOLO(self.__model_name)
         self.__model.fuse()
@@ -50,27 +56,15 @@ class BallDetection(object):
         self.__image_sub = rospy.Subscriber('image_rect', Image, self.__image_cb)
         self.__debug_pub = rospy.Publisher('debug', Image, queue_size=1)
 
-        self.__kalman = cv2.KalmanFilter(4, 2)  # 4 states (x, y, dx, dy), 2 measurements (x, y)
-        self.__kalman.measurementMatrix = np.array([[1, 0, 0, 0],
-                                                    [0, 1, 0, 0]], np.float32)
-        self.__kalman.transitionMatrix = np.array([[1, 0, 1, 0],
-                                                   [0, 1, 0, 1],
-                                                   [0, 0, 1, 0],
-                                                   [0, 0, 0, 1]], np.float32)
-        self.__kalman.processNoiseCov = np.eye(4, dtype=np.float32) * 0.03  # Process noise
-        self.__last_ball_detect = None
-
         self.__ball_x_center = None
         self.__ball_distance = None
         self.__ball_detected = None
+        self.__wait_update_time = None
         self.__pan_pub = rospy.Publisher('position_controller/command', Float64, queue_size=1)
 
         camera_info = rospy.wait_for_message('camera_info', CameraInfo, 1.0)
-        fx = camera_info.K[0]
-        self.__focal_length = fx
-        img_width = camera_info.width
-        self.__hfov = 2 * np.arctan(img_width / (2 * fx))
-        self.__img_x_center = img_width / 2.0
+        self.__focal_length = camera_info.K[0]  # fx
+        self.__img_x_center = camera_info.width / 2.0
 
         rospy.loginfo('BallDetection')
 
@@ -80,6 +74,10 @@ class BallDetection(object):
         except Exception as e:
             rospy.logerr(f'Error converting ROS image to openCV: {e}')
             return
+
+        if self.__use_sim_time and not (rospy.Time.now() - self.__delay_time) > rospy.Duration(1.0):
+            return
+        self.__delay_time = rospy.Time.now()
 
         results = self.__model.predict(
             source=cv_image,
@@ -120,9 +118,6 @@ class BallDetection(object):
         self.__result_pub.publish(detection_msg)
 
         if ball_detect:
-            measurement = np.array([[self.__ball_x_center], [0]], np.float32)
-            self.__kalman.correct(measurement)
-            self.__last_ball_detect = rospy.Time.now()
             self.__ball_detected = True
 
         debug_img = cv_image.copy()
@@ -138,6 +133,10 @@ class BallDetection(object):
 
     def update(self) -> None:
         self.__rate.sleep()
+        if self.__wait_update_time is None:
+            self.__wait_update_time = rospy.Time.now()
+        if rospy.Time.now() - self.__wait_update_time < rospy.Duration(3.0):
+            return
 
         try:
             joint_states = rospy.wait_for_message('joint_states', JointState, 1.0)
@@ -148,9 +147,6 @@ class BallDetection(object):
             return
 
         predicted_x = self.__ball_x_center
-        # if self.__last_ball_detect is None or (rospy.Time.now() - self.__last_ball_detect) > rospy.Duration(1.0):
-        #     prediction = self.__kalman.predict()
-        #     predicted_x = prediction[0][0]
         if self.__ball_detected and predicted_x:
             ball_x_diff = (predicted_x - self.__img_x_center) * (self.__ball_distance / self.__focal_length)
             offset = np.arctan2(ball_x_diff, self.__ball_distance)
@@ -162,6 +158,7 @@ class BallDetection(object):
                 target_pan = current_pan - offset
                 self.__pan_pub.publish(Float64(target_pan))
             self.__ball_detected = False
+            self.__wait_update_time = rospy.Time.now()
 
 
 if __name__ == '__main__':
