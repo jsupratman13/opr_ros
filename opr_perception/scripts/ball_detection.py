@@ -16,14 +16,14 @@
 # limitations under the License.
 #
 
-import numpy as np
 import rospy
+import tf2_ros
 from cv_bridge import CvBridge
+from geometry_msgs.msg import TransformStamped
 from sensor_msgs.msg import CameraInfo
 from sensor_msgs.msg import Image
-from sensor_msgs.msg import JointState
-from std_msgs.msg import Float64
 from ultralytics import YOLO
+from vision_msgs.msg import BoundingBox2D
 from vision_msgs.msg import Detection2D
 from vision_msgs.msg import Detection2DArray
 from vision_msgs.msg import ObjectHypothesisWithPose
@@ -41,13 +41,13 @@ class BallDetection(object):
         # ball detection parameter
         self.__ball_label = rospy.get_param('~ball_label', 'sports ball')
         self.__ball_diameter = rospy.get_param('~ball_diameter', 0.13)
-        self.__pan_joint = rospy.get_param('~pan_joint', 'head_yaw_joint')
         self.__rate = rospy.Rate(rospy.get_param('~rate', 10))
 
         # simulation
         self.__use_sim_time = rospy.get_param('use_sim_time', False)
         self.__delay_time = rospy.Time.now()
 
+        # yolo
         self.__model = YOLO(self.__model_name)
         self.__model.fuse()
 
@@ -56,17 +56,29 @@ class BallDetection(object):
         self.__image_sub = rospy.Subscriber('image_rect', Image, self.__image_cb)
         self.__debug_pub = rospy.Publisher('debug', Image, queue_size=1)
 
-        self.__ball_x_center = None
-        self.__ball_distance = None
-        self.__ball_detected = None
-        self.__wait_update_time = None
-        self.__pan_pub = rospy.Publisher('position_controller/command', Float64, queue_size=1)
-
         camera_info = rospy.wait_for_message('camera_info', CameraInfo, 1.0)
         self.__focal_length = camera_info.K[0]  # fx
-        self.__img_x_center = camera_info.width / 2.0
+        self.__cx = camera_info.K[2]  # cx
+        self.__cy = camera_info.K[6]  # cy
+
+        self.__broadcaster = tf2_ros.TransformBroadcaster()
+        self.__ball_pos = TransformStamped()
+        self.__ball_pos.child_frame_id = 'ball'
 
         rospy.loginfo('BallDetection')
+
+    def calculate_ball_position(self, bbox: BoundingBox2D) -> None:
+        distance_z = (self.__ball_diameter * self.__focal_length) / bbox.size_y
+        ball_x = (bbox.center.x - self.__cx) * distance_z / self.__focal_length
+        ball_y = (bbox.center.y - self.__cy) * distance_z / self.__focal_length
+
+        self.__ball_pos.transform.translation.x = ball_x
+        self.__ball_pos.transform.translation.y = ball_y
+        self.__ball_pos.transform.translation.z = distance_z
+        self.__ball_pos.transform.rotation.x = 0.0
+        self.__ball_pos.transform.rotation.y = 0.0
+        self.__ball_pos.transform.rotation.z = 0.0
+        self.__ball_pos.transform.rotation.w = 1.0
 
     def __image_cb(self, img_msg: Image) -> None:
         try:
@@ -87,7 +99,6 @@ class BallDetection(object):
             max_det=self.__max_detection,
             classes=self.__classes)
 
-        ball_detect = False
         detection_msg = Detection2DArray()
         detection_msg.header = img_msg.header
         for result in results[0].boxes:
@@ -96,6 +107,7 @@ class BallDetection(object):
             confidence = result.conf[0].item()
 
             detection = Detection2D()
+            detection.header = img_msg.header
             detection.bbox.center.x = (x_min + x_max) / 2.0
             detection.bbox.center.y = (y_min + y_max) / 2.0
             detection.bbox.size_x = x_max - x_min
@@ -110,15 +122,11 @@ class BallDetection(object):
 
             label = self.__model.names[int(cls)]
             if label == self.__ball_label:
-                ball_detect = True
-                self.__ball_x_center = (x_min + x_max) / 2.0
-                distance = (self.__ball_diameter * self.__focal_length) / (y_max - y_min)
-                self.__ball_distance = np.sqrt(distance**2 + 0.42**2)
+                self.calculate_ball_position(detection.bbox)
+                self.__ball_pos.header = img_msg.header
+                self.__broadcaster.sendTransform(self.__ball_pos)
 
         self.__result_pub.publish(detection_msg)
-
-        if ball_detect:
-            self.__ball_detected = True
 
         debug_img = cv_image.copy()
         for result in results:
@@ -133,32 +141,6 @@ class BallDetection(object):
 
     def update(self) -> None:
         self.__rate.sleep()
-        if self.__wait_update_time is None:
-            self.__wait_update_time = rospy.Time.now()
-        if rospy.Time.now() - self.__wait_update_time < rospy.Duration(3.0):
-            return
-
-        try:
-            joint_states = rospy.wait_for_message('joint_states', JointState, 1.0)
-            index = joint_states.name.index(self.__pan_joint)
-            current_pan = joint_states.position[index]
-        except Exception:
-            rospy.logwarn(f'Failed to get current {self.__pan_joint} position')
-            return
-
-        predicted_x = self.__ball_x_center
-        if self.__ball_detected and predicted_x:
-            ball_x_diff = (predicted_x - self.__img_x_center) * (self.__ball_distance / self.__focal_length)
-            offset = np.arctan2(ball_x_diff, self.__ball_distance)
-            print(f'ball_x: {ball_x_diff}')
-            print(f'distance: {self.__ball_distance}')
-            print(f'true_offset: {offset}')
-            print('-----')
-            if abs(offset) > 0.05:
-                target_pan = current_pan - offset
-                self.__pan_pub.publish(Float64(target_pan))
-            self.__ball_detected = False
-            self.__wait_update_time = rospy.Time.now()
 
 
 if __name__ == '__main__':
