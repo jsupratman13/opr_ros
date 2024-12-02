@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- body joint-->
+  <joint name="body_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="body_link"/>
+    <origin xyz="0 0 0.3725" rpy="0 0 0"/>
+  </joint>
+
+  <!-- body link -->
+  <link name="body_link">
+    <inertial>
+      <origin xyz="-0.02475 0.000537 0.068556" rpy="0 0 0"/>
+      <mass value="1.7586391"/>
+      <inertia ixx="0.009982335" ixy="0.0" ixz="0.0" iyy="0.007902445" iyz="0.0" izz="0.00631869"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/Trunk.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/Trunk.stl"/>
+      </geometry>
+    </collision>
+  </link>
+</robot>

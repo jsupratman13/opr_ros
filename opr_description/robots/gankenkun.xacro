@@ -40,7 +40,7 @@
   <!-- sensors -->
   <xacro:include filename="$(find opr_description)/xacro/gankenkun/sensors/imu.xacro"/>
   <xacro:imu name="imu" parent="body_link" update_rate="10">
-    <origin xyz="0 0 0.12" rpy="0 0 0"/>
+    <origin xyz="0 0 0.06" rpy="0 0 0"/>
   </xacro:imu>
   <xacro:include filename="$(find opr_description)/xacro/gankenkun/sensors/camera.xacro"/>
   <xacro:camera name="camera" parent="head_yaw_link">

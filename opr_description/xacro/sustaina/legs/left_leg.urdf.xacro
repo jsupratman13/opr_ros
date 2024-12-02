@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- leg joints -->
+  <joint name="left_waist_yaw_joint" type="revolute">
+    <parent link="body_link"/>
+    <child link="left_waist_yaw_link"/>
+    <origin xyz="0.0 0.044 -0.015" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-3*PI/4}" upper="${3*PI/4}" velocity="4.8"/>
+    <axis xyz="0 0 1"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+  <joint name="left_waist_roll_joint" type="revolute">
+    <parent link="left_waist_yaw_link"/>
+    <child link="left_waist_roll_link"/>
+    <origin xyz="0 0 -0.0475" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/4}" upper="${PI/4}" velocity="4.8"/>
+    <axis xyz="1 0 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <joint name="left_waist_pitch_joint" type="revolute">
+    <parent link="left_waist_roll_link"/>
+    <child link="left_thigh_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/2}" upper="${PI/6}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <joint name="left_knee_pitch_joint" type="revolute">
+    <parent link="left_knee_link"/>
+    <child link="left_shin_link"/>
+    <origin xyz="0 0 -0.057" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <joint name="left_ankle_pitch_joint" type="revolute">
+    <parent link="left_ankle_side_link"/>
+    <child link="left_ankle_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <joint name="left_ankle_roll_joint" type="revolute">
+    <parent link="left_ankle_link"/>
+    <child link="left_foot_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8"/>
+    <axis xyz="1 0 0"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+
+  <!-- mimic joints -->
+  <joint name="left_slider_crank_mimic_joint" type="revolute">
+    <parent link="left_waist_roll_link"/>
+    <child link="left_slider_crank_link"/>
+    <origin xyz="-0.0315 0 0.018" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8"/>
+    <axis xyz="1 0 0"/>
+    <mimic joint="left_waist_roll_joint" multiplier="-2" offset="0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+  <joint name="left_knee_pitch_mimic_joint" type="revolute">
+    <parent link="left_thigh_link"/>
+    <child link="left_knee_link"/>
+    <origin xyz="0 0 -0.1" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+    <mimic joint="left_waist_pitch_joint" multiplier="-1" offset="0"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <joint name="left_hamstring_mimic_joint" type="revolute">
+    <parent link="left_waist_roll_link"/>
+    <child link="left_hamstring_link"/>
+    <origin xyz="-0.032 0 -0.02" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/2}" upper="${PI/6}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+    <mimic joint="left_waist_pitch_joint" multiplier="1" offset="0"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <joint name="left_calf_mimic_joint" type="revolute">
+    <parent link="left_knee_link"/>
+    <child link="left_calf_link"/>
+    <origin xyz="-0.032 0 -0.037" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/6}" upper="${PI/2}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+    <mimic joint="left_knee_pitch_joint" multiplier="1" offset="0"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <joint name="left_ankle_pitch_mimic_joint" type="revolute">
+    <parent link="left_shin_link"/>
+    <child link="left_ankle_side_link"/>
+    <origin xyz="0 0 -0.1" rpy="0 0 0"/>
+    <limit effort="1000" lower="${-PI/2}" upper="${PI/2}" velocity="4.8"/>
+    <axis xyz="0 1 0"/>
+    <mimic joint="left_knee_pitch_joint" multiplier="-1" offset="0"/>
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+
+  <!-- leg links -->
+  <link name="left_waist_yaw_link">
+    <inertial>
+      <origin xyz="-0.008797 0 -0.009724" rpy="0 0 0"/>
+      <mass value="0.03478"/>
+      <inertia ixx="0.000008114" ixy="0.0" ixz="0.0" iyy="0.000023034" iyz="0.0" izz="0.000019287"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/WaistYaw.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/WaistYaw.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_waist_roll_link">
+    <inertial>
+      <origin xyz="-0.011068 -0.000004 -0.000154" rpy="0 0 0"/>
+      <mass value="0.129389"/>
+      <inertia ixx="0.000055580" ixy="0.0" ixz="0.0" iyy="0.000061752" iyz="0.0" izz="0.000079989"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/WaistRoll.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/WaistRoll.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_thigh_link">
+    <inertial>
+      <origin xyz="0.011314 0.000000 -0.062223" rpy="0 0 0"/>
+      <mass value="0.048967"/>
+      <inertia ixx="0.000082632" ixy="0.0" ixz="0.0" iyy="0.000049273" iyz="0.0" izz="0.000045494"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/Thigh.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/Thigh.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_knee_link">
+    <inertial>
+      <origin xyz="-0.012553 -0.000997 -0.023840" rpy="0 0 0"/>
+      <mass value="0.1912"/>
+      <inertia ixx="0.000164790" ixy="0.0" ixz="0.0" iyy="0.000151986" iyz="0.0" izz="0.000098349"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/LeftKnee.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/LeftKnee.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_shin_link">
+    <inertial>
+      <origin xyz="0.011314 0.000000 -0.037777" rpy="0 0 0"/>
+      <mass value="0.048967"/>
+      <inertia ixx="0.000082632" ixy="0.0" ixz="0.0" iyy="0.000049273" iyz="0.0" izz="0.000045494"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 -0.1" rpy="${PI} 0 0"/>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/Shin.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.1" rpy="${PI} 0 0"/>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/Shin.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_ankle_side_link">
+    <inertial>
+      <origin xyz="-0.014232 0.000000 0.008895" rpy="0 0 0"/>
+      <mass value="0.033835"/>
+      <inertia ixx="0.000030599" ixy="0.0" ixz="0.0" iyy="0.000011414" iyz="0.0" izz="0.000040713"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/AnkleSide.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/AnkleSide.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_ankle_link">
+    <inertial>
+      <origin xyz="-0.031024 -0.000563 0.005073" rpy="0 0 0"/>
+      <mass value="0.170076"/>
+      <inertia ixx="0.000049799" ixy="0.0" ixz="0.0" iyy="0.000213199" iyz="0.0" izz="0.000223639"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/LeftAnkle.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/LeftAnkle.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_foot_link">
+    <inertial>
+      <origin xyz="-0.009915 0.014839 -0.038901" rpy="0 0 0"/>
+      <mass value="0.084354"/>
+      <inertia ixx="0.000072411" ixy="0.0" ixz="0.0" iyy="0.000303046" iyz="0.0" izz="0.000358794"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/LeftFoot.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/LeftFoot.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_slider_crank_link">
+    <inertial>
+      <origin xyz="-0.005363 0.000000 0.012305" rpy="0 0 0"/>
+      <mass value="0.011085"/>
+      <inertia ixx="0.000001236" ixy="0.0" ixz="0.0" iyy="0.000001154" iyz="0.0" izz="0.000000372"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/SliderCrank.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/SliderCrank.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_hamstring_link">
+    <inertial>
+      <origin xyz="-0.001672 0.000000 -0.043339" rpy="0 0 0"/>
+      <mass value="0.023"/>
+      <inertia ixx="0.000034484" ixy="0.0" ixz="0.0" iyy="0.000017178" iyz="0.0" izz="0.000018302"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/Hamstring.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/Hamstring.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="left_calf_link">
+    <inertial>
+      <origin xyz="-0.001672 0.000000 -0.048684" rpy="0 0 0"/>
+      <mass value="0.023"/>
+      <inertia ixx="0.000032309" ixy="0.0" ixz="0.0" iyy="0.000015039" iyz="0.0" izz="0.000018339"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/Calf.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://opr_description/meshes/sustaina/Calf.stl"/>
+      </geometry>
+    </collision>
+  </link>
+</robot>
