@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- argument -->
+  <include file="$(find opr_perception)/launch/perception.launch"/>
+  <include file="$(find hajime_walk_ros)/launch/hajime_walk_ros.launch"/>
+
+  <node name="kick_ball_behavior" pkg="opr_behavior" type="kick_ball.py" output="screen">
+  </node>
+</launch>
