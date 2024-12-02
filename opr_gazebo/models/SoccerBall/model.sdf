@@ -21,7 +21,7 @@
       <collision name="collision">
         <geometry>
           <sphere>
-            <radius>0.08</radius>
+            <radius>0.07</radius>
           </sphere>
         </geometry>
         <surface>
