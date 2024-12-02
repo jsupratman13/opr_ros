@@ -8,6 +8,7 @@ from actionlib import SimpleActionClient
 from hajime_walk_msgs.msg import HajimeMotionAction
 from hajime_walk_msgs.msg import HajimeMotionGoal
 from hajime_walk_msgs.msg import HajimeWalk
+from std_msgs.msg import Bool
 from std_msgs.msg import Empty
 from std_msgs.msg import Float64
 
@@ -28,13 +29,30 @@ class KickBallOnly(object):
         self.tf2_buffer = tf2_ros.Buffer(rospy.Duration(3))
         self.tf2_listener = tf2_ros.TransformListener(self.tf2_buffer)
 
-        self.rate = rospy.Rate(10)
+        rospy.Subscriber('button/start', Bool, self.start_cb)
+        rospy.Subscriber('button/stop', Bool, self.stop_cb)
+        self.enable = True if rospy.get_param('use_sim_time', False) else False
         rospy.loginfo('Ready')
+        rospy.loginfo('disabled' if not self.enable else 'enabled')
+
+    def start_cb(self, msg: Bool) -> None:
+        if msg.data:
+            self.enable = True
+            rospy.loginfo('enabled')
+
+    def stop_cb(self, msg: Bool) -> None:
+        if msg.data:
+            self.enable = False
+            self.cancel.publish(Empty())
+            rospy.loginfo('disabled')
 
     def stop(self) -> None:
         self.cancel.publish(Empty())
 
     def run(self) -> None:
+        if not self.enable:
+            return
+
         try:
             ball_pos = self.tf2_buffer.lookup_transform('ball', 'base_link', rospy.Time(0)).transform
             ball_x = ball_pos.translation.y
