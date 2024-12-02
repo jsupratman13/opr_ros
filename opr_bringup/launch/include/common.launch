@@ -5,7 +5,11 @@
   <arg name="model" default="$(find opr_description)/robots/$(arg robot).xacro"/>
   <param name="robot_description" command="xacro $(arg model)"/>
 
+  <!-- publish robot state to tf2 -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
   <!-- load ros controllers -->
   <rosparam command="load" file="$(find opr_bringup)/config/controller.yaml"/>
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller joint_group_position_controller head_yaw_controller"/>
+
 </launch>
